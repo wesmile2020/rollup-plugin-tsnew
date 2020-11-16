@@ -33,10 +33,8 @@ function typescript(options: Options): rollup.Plugin {
         name: 'rpt',
 
         resolveId(source, importer) {
-            if (source === 'tslib') {
-
-            }
-            return null;
+            if (!importer) return null;
+            
         },
 
         transform(code: string, id: string) {
