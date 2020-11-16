@@ -1,7 +1,8 @@
 import path from 'path';
 import fs from 'fs';
 import ts from 'typescript';
-import  rollup from 'rollup';
+import rollup from 'rollup';
+import { formatCompilerOptions } from './options';
 import LanguageServiceHost from './LanguageServiceHost';
 import { logError, printDiagnosticError } from './log';
 
@@ -23,9 +24,13 @@ class Engine {
             }
             throw new Error('rpt: error');
         }
-
-        this._serviceHost = new LanguageServiceHost(options, cwd);
+        const compilerOptions = formatCompilerOptions(options);
+        this._serviceHost = new LanguageServiceHost(compilerOptions, cwd);
         this._service = ts.createLanguageService(this._serviceHost, ts.createDocumentRegistry());
+    }
+
+    getCompilerOptions() {
+        return this._serviceHost.getCompilationSettings();
     }
 
     transform(fileName: string, code: string): rollup.TransformResult {

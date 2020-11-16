@@ -1,5 +1,5 @@
 import ts from 'typescript';
-import { getDeclareFile } from './options';
+import { getDeclareFile } from './utils';
 
 class LanguageServiceHost implements ts.LanguageServiceHost {
     private _compileOptions: ts.CompilerOptions;
