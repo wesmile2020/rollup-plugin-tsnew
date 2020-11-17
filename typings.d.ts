@@ -6,4 +6,5 @@ interface Options {
     check?: boolean;
 }
 
+export { typescript };
 export default function typescript(options: Options): rollup.Plugin;

@@ -9,7 +9,7 @@ options
 
 usage
 ```javascript
-const typescript = require('rollup-plugin-tsnew');
+const { typescript } = require('rollup-plugin-tsnew');
 
 module.exports = {
     plugins: [typescript()]
