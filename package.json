@@ -4,7 +4,9 @@
   "description": "a rollup plugin for typescript compile",
   "main": "dist/index.js",
   "types": "typings.d.ts",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wesmile2020/rollup-plugin-tsnew.git"
