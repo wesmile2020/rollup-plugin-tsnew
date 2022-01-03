@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-tsnew",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "description": "a rollup plugin for typescript compile",
   "main": "dist/index.js",
   "files": ["dist"],
