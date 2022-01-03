@@ -1,11 +1,12 @@
 {
   "name": "rollup-plugin-tsnew",
-  "version": "2.4.0",
+  "version": "2.7.0",
   "description": "a rollup plugin for typescript compile",
-  "main": "./dist/index.js",
-  "files": ["./dist"],
+  "main": "dist/index.js",
+  "files": ["dist"],
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "release": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
