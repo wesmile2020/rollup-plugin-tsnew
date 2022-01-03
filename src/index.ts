@@ -4,8 +4,6 @@ import { createFilter, FilterPattern } from '@rollup/pluginutils';
 import Engine from './Engine';
 import { normalizePath, createFormattingHost, createModuleResolver } from './utils';
 
-const tslibPkg = require('tslib/package.json');
-
 interface Options {
     include?: FilterPattern;
     exclude?: FilterPattern;
@@ -24,9 +22,6 @@ function typescript(options: Options): rollup.Plugin {
     const cwd = process.cwd();
 
     const engine = new Engine(cwd);
-    // load tslib
-    const tslibPath = require.resolve(`tslib/${tslibPkg.module}`);
-    const tslib = fs.readFileSync(tslibPath, 'utf-8');
 
     const host = createFormattingHost(engine.getCompilerOptions());
     const resolveModule = createModuleResolver(host);
@@ -36,7 +31,7 @@ function typescript(options: Options): rollup.Plugin {
 
         resolveId(source, importer) {
             if (source === 'tslib') {
-                return tslib;
+                return source;
             }
 
             if (!importer) return null;
