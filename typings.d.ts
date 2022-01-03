@@ -1,4 +1,5 @@
 import rollup from 'rollup';
+import { FilterPattern } from '@rollup/pluginutils';
 
 interface Options {
     include?: FilterPattern;
