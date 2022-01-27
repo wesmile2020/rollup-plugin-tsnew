@@ -1,9 +1,10 @@
 {
   "name": "rollup-plugin-tsnew",
   "version": "2.9.0",
-  "description": "a rollup plugin for typescript compile",
+  "description": "a rollup plugin for typescript compile and support condition compile",
   "main": "dist/index.js",
   "files": ["dist"],
+  "keywords": ["rollup", "rollup-plugin", "condition compile", "rollup typescript"],
   "scripts": {
     "build": "tsc",
     "release": "npm run build && npm publish"
