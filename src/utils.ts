@@ -60,13 +60,13 @@ export function createModuleResolver(host: DiagnosticsHost): Resolver {
     };
 }
 
-export function loopEach(path: string, callback: (path: string) => void) {
-    if (!fs.existsSync(path)) return;
-    const stats = fs.statSync(path);
+export function loopEach(url: string, callback: (url: string) => void) {
+    if (!fs.existsSync(url)) return;
+    const stats = fs.statSync(url);
     if (stats.isDirectory()) {
-        const dir = fs.readdirSync(path);
+        const dir = fs.readdirSync(url);
         for (let i = 0; i < dir.length; i += 1) {
-            const curPath = `${path}/${dir[i]}`;
+            const curPath = path.resolve(url, dir[i]);
             const curStats = fs.statSync(curPath);
             if (curStats.isDirectory()) {
                 loopEach(curPath, callback);
@@ -75,7 +75,7 @@ export function loopEach(path: string, callback: (path: string) => void) {
             }
         }
     } else {
-        callback(path);
+        callback(url);
     }
 }
 

@@ -1,13 +1,15 @@
 import rollup from 'rollup';
-import fs from 'fs';
 import { createFilter, FilterPattern } from '@rollup/pluginutils';
 import Engine from './Engine';
 import { normalizePath, createFormattingHost, createModuleResolver } from './utils';
+import conditionCompile from './conditionCompile';
 
 interface Options {
     include?: FilterPattern;
     exclude?: FilterPattern;
     check?: boolean;
+    enableConditionCompile?: boolean;
+    defines?: Record<string, boolean>
 }
 
 const defaultOptions: Options = {
@@ -48,8 +50,12 @@ function typescript(options: Options): rollup.Plugin {
             return null;
         },
 
-        transform(code: string, id: string) {
+        transform(originCode: string, id: string) {
             if (!filter(id)) return;
+            let code = originCode;
+            if (options.enableConditionCompile) {
+                code = conditionCompile(originCode, options.defines || {});
+            }
             if (opts.check) {
                 return engine.transformWithCheck(id, code);
             } else {
