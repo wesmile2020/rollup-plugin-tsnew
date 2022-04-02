@@ -60,8 +60,8 @@ export function createModuleResolver(host: DiagnosticsHost): Resolver {
     };
 }
 
-export function loopEach(url: string, callback: (url: string) => void) {
-    if (!fs.existsSync(url)) return;
+export function loopEach(url: string, ignore: RegExp, callback: (url: string) => void) {
+    if (!fs.existsSync(url) || ignore.test(url)) return;
     const stats = fs.statSync(url);
     if (stats.isDirectory()) {
         const dir = fs.readdirSync(url);
@@ -69,7 +69,7 @@ export function loopEach(url: string, callback: (url: string) => void) {
             const curPath = path.resolve(url, dir[i]);
             const curStats = fs.statSync(curPath);
             if (curStats.isDirectory()) {
-                loopEach(curPath, callback);
+                loopEach(curPath, ignore, callback);
             } else if (curStats.isFile()) {
                 callback(curPath);
             }
@@ -81,17 +81,11 @@ export function loopEach(url: string, callback: (url: string) => void) {
 
 export function getDeclareFile(cwd: string) {
     if (!fs.existsSync(cwd)) return[];
-    const status = fs.statSync(cwd);
-    const dir = fs.readdirSync(cwd);
     const result: string[] = [];
-    for (let i = 0; i < dir.length; i += 1) {
-        if (!/node_modules/.test(dir[i])) {
-            loopEach(`${cwd}/${dir[i]}`, (url) => {
-                if (url.endsWith('.d.ts')) {
-                    result.push(url);
-                }
-            });
+    loopEach(cwd, /node_modules|dist/, (url) => {
+        if (url.endsWith('.d.ts')) {
+            result.push(url);
         }
-    }
+    });
     return result;
 }
