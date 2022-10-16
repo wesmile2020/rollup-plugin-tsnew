@@ -55,8 +55,8 @@ function typescript(options: Options): rollup.Plugin {
         transform(originCode: string, id: string) {
             if (!filter(id)) return;
             let code = originCode;
-            if (options.enableConditionCompile) {
-                code = conditionCompile(originCode, options.defines || {});
+            if (opts.enableConditionCompile) {
+                code = conditionCompile(originCode, opts.defines || {});
             }
             if (opts.check) {
                 return engine.transformWithCheck(id, code);
