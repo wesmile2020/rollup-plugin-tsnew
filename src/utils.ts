@@ -89,3 +89,17 @@ export function getDeclareFile(cwd: string) {
     });
     return result;
 }
+
+export function getDependPath(cwd: string, libName: string) {
+    const list = cwd.split(path.sep);
+    while (list.length !== 0) {
+        const libDir = path.resolve(list.join(path.sep), 'node_modules', libName);
+        if (fs.existsSync(libDir)) {
+            const jsonUrl = path.resolve(libDir, 'package.json');
+            const json = JSON.parse(fs.readFileSync(jsonUrl, 'utf-8'));
+            return path.resolve(libDir, json.module || json.main || 'index.js');
+        }
+        list.pop();
+    }
+    return libName;
+}

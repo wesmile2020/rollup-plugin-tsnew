@@ -1,7 +1,7 @@
 import rollup from 'rollup';
 import { createFilter, FilterPattern } from '@rollup/pluginutils';
 import Engine from './Engine';
-import { normalizePath, createFormattingHost, createModuleResolver } from './utils';
+import { normalizePath, createFormattingHost, createModuleResolver, getDependPath } from './utils';
 import conditionCompile from './conditionCompile';
 
 interface Options {
@@ -28,12 +28,14 @@ function typescript(options: Options): rollup.Plugin {
     const host = createFormattingHost(engine.getCompilerOptions());
     const resolveModule = createModuleResolver(host);
 
+    const tslib = getDependPath(cwd, 'tslib');
+
     return {
         name: 'rpt',
 
         resolveId(source, importer) {
             if (source === 'tslib') {
-                return source;
+                return tslib;
             }
 
             if (!importer) return null;
