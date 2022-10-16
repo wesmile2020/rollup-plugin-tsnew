@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-tsnew",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "a rollup plugin for typescript compile and support condition compile",
   "main": "dist/index.js",
   "files": [
